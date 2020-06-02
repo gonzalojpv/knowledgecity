@@ -23,11 +23,7 @@
 
 <style lang="scss">
     .section-login {
-        padding-top: 2rem;
+        padding-top: 4rem;
         position: relative;
-
-        div.panel {
-            border: none;
-        }
     }
 </style>

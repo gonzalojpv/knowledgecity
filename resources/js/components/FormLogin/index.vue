@@ -47,6 +47,7 @@
                     :disabled="tryingToLogIn"
                     class="btn btn-block">
                     {{ submit }}
+                    <i class="icon-next"></i>
                 </button>
             </div>
         </form>
@@ -128,7 +129,8 @@
         }
 
         .icon-password,
-        .icon-user {
+        .icon-user,
+        .icon-next {
             background-image: url("../../../images/password.svg");
             background-repeat: no-repeat;
             background-size: contain;
@@ -141,6 +143,15 @@
 
         .icon-user {
             background-image: url("../../../images/user.svg");
+        }
+
+        .icon-next {
+            background-image: url("../../../images/next.svg");
+            height: 1.5rem;
+            width: 2rem;
+            right: 1rem;
+            left: unset;
+            filter: invert(95%) sepia(0%) saturate(7500%) hue-rotate(112deg) brightness(107%) contrast(107%);
         }
 
         input[type="text"]:focus,
