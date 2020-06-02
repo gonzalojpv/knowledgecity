@@ -1,5 +1,5 @@
 <template>
     <section>
-        Holas
+        Home
     </section>
 </template>

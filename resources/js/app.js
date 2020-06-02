@@ -11,7 +11,6 @@ Vue.use(Vuelidate)
 import App from './views/App'
 import Home from './views/Home'
 import Login from './views/Login'
-import SignUp from './views/SignUp'
 import View404 from './views/View404'
 
 
@@ -34,14 +33,6 @@ const router = new VueRouter({
             component: Login,
         },
         {
-            path: '/signup',
-            name: 'signup',
-            component: SignUp,
-            meta: {
-                authRequired: false
-            },
-        },
-        {
             path: '/logout',
             name: 'logout',
             meta: {
@@ -57,13 +48,13 @@ router.beforeEach((routeTo, routeFrom, next) => {
         store.dispatch('auth/logOut');
         next({ name: 'home' });
     }
-    else if (store.getters['auth/loggedIn'] && (routeTo.fullPath === '/login' || routeTo.fullPath === '/signup')) {
+    else if (store.getters['auth/loggedIn'] && (routeTo.fullPath === '/login')) {
         next({ name: 'home' });
     }
     else if (store.getters['auth/loggedIn']) {
         next({ name: 'home' });
     }
-    else if (routeTo.fullPath == '/login' || routeTo.fullPath == '/signup') {
+    else if (routeTo.fullPath == '/login') {
         next()
     }
     else {
