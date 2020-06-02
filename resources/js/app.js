@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate'
 import 'bootstrap'
 import './bootstrap'
-import '../sass/app.scss'
+import '../sass/_variables.scss'
 
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
@@ -24,6 +24,9 @@ const router = new VueRouter({
             path: '/',
             name: 'home',
             component: Home,
+            meta: {
+                authRequired: true
+            },
         },
         {
             path: '/login',
@@ -58,13 +61,13 @@ router.beforeEach((routeTo, routeFrom, next) => {
         next({ name: 'home' });
     }
     else if (store.getters['auth/loggedIn']) {
-        return next()
+        next({ name: 'home' });
     }
     else if (routeTo.fullPath == '/login' || routeTo.fullPath == '/signup') {
         next()
     }
     else {
-        return next()
+        next({ name: 'login' });
     }
 });
 
