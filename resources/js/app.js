@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Vuelidate from 'vuelidate'
 import 'bootstrap'
 import './bootstrap'
-import '../sass/_variables.scss'
+import '../sass/_sap.scss'
 
 Vue.use(VueRouter)
 Vue.use(Vuelidate)
