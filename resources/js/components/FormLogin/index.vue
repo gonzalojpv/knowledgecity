@@ -4,7 +4,7 @@
             <div class="text-center">
                 <div class="logo">
                 </div>
-                <div class="error-message" v-text="authError"></div>
+                <div class="error-message text-danger" v-text="authError"></div>
             </div>
 
             <div class="form-group">
@@ -12,9 +12,14 @@
                 <input
                     type="text"
                     class="form-control"
-                    v-model="username"
-                    required
+                    v-model.trim="$v.form.username.$model"
+                    :class="{ 'is-invalid': $v.form.username.$error }"
                     placeholder="Username">
+                    <div
+                        v-if="!$v.form.username.required"
+                        class="invalid-feedback">
+                        This field is required.
+                    </div>
             </div>
 
             <div class="form-group">
@@ -22,9 +27,14 @@
                 <input
                     type="password"
                     class="form-control"
-                    v-model="password"
-                    equired
+                    v-model.trim="$v.form.password.$model"
+                    :class="{ 'is-invalid': $v.form.password.$error }"
                     placeholder="Password">
+                    <div
+                        v-if="!$v.form.password.required"
+                        class="invalid-feedback">
+                        This field is required.
+                    </div>
             </div>
 
             <div class="form-group login-options">
@@ -58,16 +68,21 @@
     import {
         authMethods,
         authComputed
-    } from '../../store/helpers';
+    } from '../../store/helpers'
+    import {
+        required,
+    } from 'vuelidate/lib/validators'
 
     export default {
         data() {
           return {
             submit        : 'Log In',
-            username         : null,
-            password      : null,
             authError     : null,
             tryingToLogIn : false,
+            form: {
+                username         : null,
+                password      : null,
+            }
           };
         },
         computed: {
@@ -75,29 +90,49 @@
         },
         methods: {
             ...authMethods,
-            tryToLogIn() {
-                this.tryingToLogIn = true;
-                this.authError = null;
-                this.submit = 'Authenticating...';
+            tryToLogIn(evt) {
+                evt.preventDefault();
 
-                this.logIn({
-                    email: this.email,
-                    password: this.password,
-                }).then((response) => {
-                    if (response.success) {
-                        this.$router.push({ name: 'home'});
-                    }
-                }).catch(error => {
+                this.$v.$touch();
+
+                if ( ! this.$v.$invalid ) {
+                    this.tryingToLogIn = true;
+                    this.authError = null;
+                    this.submit = 'Authenticating...';
+
+                    this.logIn({
+                        username: this.form.username,
+                        password: this.form.password,
+                    }).then((response) => {
+                        if (response.success) {
+                            this.$router.push({ name: 'home'});
+                        }
+                    }).catch(error => {
+                        this.tryingToLogIn = false;
+                        this.submit = 'Login';
+
+                        if (error.response) {
+                            this.authError = error.response.data.message;
+                        }
+                        else {
+                            this.authError = 'Lo sentimos ocurrio un error.';
+                        }
+                    });
+                }
+                else {
                     this.tryingToLogIn = false;
                     this.submit = 'Login';
-
-                    if (error.response) {
-                        this.authError = error.response.data.message;
-                    }
-                    else {
-                        this.authError = 'Lo sentimos ocurrio un error.';
-                    }
-                });
+                }
+            }
+        },
+        validations: {
+            form: {
+                username: {
+                    required
+                },
+                password: {
+                    required
+                }
             }
         }
     }

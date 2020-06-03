@@ -14,6 +14,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('register', 'Api\RegisterController@register');
+Route::post('login', 'Api\RegisterController@login');
+
 Route::group(['middleware' => 'auth:api'], function() {
     Route::resource('users', 'Api\UserController');
     Route::resource('students', 'Api\StudentController');

@@ -44,18 +44,12 @@ const router = new VueRouter({
 
 router.beforeEach((routeTo, routeFrom, next) => {
 
-    if (store.getters['auth/loggedIn'] && routeTo.fullPath === '/logout') {
-        store.dispatch('auth/logOut');
-        next({ name: 'home' });
-    }
-    else if (store.getters['auth/loggedIn'] && (routeTo.fullPath === '/login')) {
-        next({ name: 'home' });
-    }
-    else if (store.getters['auth/loggedIn']) {
-        next({ name: 'home' });
-    }
-    else if (routeTo.fullPath == '/login') {
+    if ( store.getters['auth/loggedIn'] && 'home' === routeTo.name ) {
         next()
+    }
+    else if( store.getters['auth/loggedIn'] && routeTo.fullPath === '/logout' ) {
+        store.dispatch('auth/logOut');
+        next({ name: 'login' });
     }
     else {
         next({ name: 'login' });
