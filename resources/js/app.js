@@ -44,6 +44,8 @@ const router = new VueRouter({
 
 router.beforeEach((routeTo, routeFrom, next) => {
 
+    next()
+
     if ( store.getters['auth/loggedIn'] && 'home' === routeTo.name ) {
         next()
     }

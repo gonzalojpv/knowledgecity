@@ -8,3 +8,11 @@ export const authComputed = {
 };
 
 export const authMethods = mapActions('auth', ['logIn', 'logOut', 'signUp',]);
+
+/* student */
+export const studentComputed = {
+    ...mapGetters('student', ['getAllStudents']),
+    ...mapState('student', ['students']),
+};
+
+export const studentMethods = mapActions('student', ['fetchStudents',]);
