@@ -23,8 +23,10 @@ const actions = {
     init({ state, dispatch }) {
         setDefaultAuthHeaders(state);
     },
-    fetchStudents({ commit }) {
-        return axios.get(`${baseURL}students`).then(response => {
+    fetchStudents({ commit }, params) {
+        return axios.get(`${baseURL}students`, {
+            params
+        }).then(response => {
             commit("FETCH_STUDENTS", response.data.data);
             return response.data;
         }).catch(error => {

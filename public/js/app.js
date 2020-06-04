@@ -2150,6 +2150,48 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2160,26 +2202,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   data: function data() {
     return {
+      pagesNumber: 10,
+      pagination: {
+        current_page: 1,
+        last_page: 5
+      },
       items: [],
       fields: [{
         name: 'id',
-        title: '#'
+        title: ''
       }, {
         name: 'first_name',
-        title: 'Name'
+        title: ''
       }, {
         name: 'email',
-        title: ' '
+        title: ''
       }]
     };
   },
   created: function created() {
-    this.fetchStudents().then(function (response) {
+    this.fetchStudents({}).then(function (response) {
       console.log(response);
     });
   },
   computed: _objectSpread({}, _store_helpers__WEBPACK_IMPORTED_MODULE_2__["studentComputed"]),
-  methods: _objectSpread({}, _store_helpers__WEBPACK_IMPORTED_MODULE_2__["studentMethods"])
+  methods: _objectSpread(_objectSpread({}, _store_helpers__WEBPACK_IMPORTED_MODULE_2__["studentMethods"]), {}, {
+    changePage: function changePage(page) {
+      this.pagination.current_page = page;
+      this.fetchStudents({
+        page: this.pagination.current_page
+      }).then(function (response) {
+        console.log(response);
+      });
+    },
+    onPaginationData: function onPaginationData(paginationData) {
+      this.$refs.pagination.setPaginationData(paginationData);
+    }
+  })
 });
 
 /***/ }),
@@ -6712,12 +6771,13 @@ exports.push([module.i, "@charset \"UTF-8\";\n/** Fonts **/\n/* new breackpoint*
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
+var escape = __webpack_require__(/*! ../../../node_modules/css-loader/lib/url/escape.js */ "./node_modules/css-loader/lib/url/escape.js");
 exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
 // imports
 
 
 // module
-exports.push([module.i, "section.home[data-v-63cd6604] {\n  padding-top: 3rem;\n}", ""]);
+exports.push([module.i, "section.home[data-v-63cd6604] {\n  padding-top: 3rem;\n}\nsection.home .icon-checked[data-v-63cd6604] {\n  background-image: url(" + escape(__webpack_require__(/*! ../../images/correct.svg */ "./resources/images/correct.svg")) + ");\n  height: 1rem;\n  width: 1rem;\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: contain;\n  display: inline-block;\n  float: right;\n}", ""]);
 
 // exports
 
@@ -38908,8 +38968,6 @@ var render = function() {
             "div",
             { staticClass: "col" },
             [
-              _c("hr"),
-              _vm._v(" "),
               _c("vuetable", {
                 ref: "vuetable",
                 attrs: {
@@ -38918,6 +38976,14 @@ var render = function() {
                   data: _vm.getAllStudents
                 },
                 scopedSlots: _vm._u([
+                  {
+                    key: "id",
+                    fn: function(props) {
+                      return _c("div", {}, [
+                        _c("i", { staticClass: "icon-checked" })
+                      ])
+                    }
+                  },
                   {
                     key: "first_name",
                     fn: function(props) {
@@ -38951,6 +39017,109 @@ var render = function() {
             ],
             1
           )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col text-center" }, [
+            _c(
+              "nav",
+              {
+                staticClass: "m-auto",
+                attrs: { "aria-label": "Page navigation" }
+              },
+              [
+                _c(
+                  "ul",
+                  { staticClass: "pagination" },
+                  [
+                    _vm.pagination.current_page > 1
+                      ? _c("li", { staticClass: "page-item" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: {
+                                href: "javascript:void(0)",
+                                "aria-label": "Previous"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.changePage(
+                                    _vm.pagination.current_page - 1
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("«")
+                              ])
+                            ]
+                          )
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    _vm._l(_vm.pagesNumber, function(page, index) {
+                      return _c(
+                        "li",
+                        {
+                          key: index,
+                          staticClass: "page-item",
+                          class: { active: page == _vm.pagination.current_page }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.changePage(page)
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(page))]
+                          )
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _vm.pagination.current_page < _vm.pagination.last_page
+                      ? _c("li", { staticClass: "page-item" }, [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "page-link",
+                              attrs: {
+                                href: "javascript:void(0)",
+                                "aria-label": "Next"
+                              },
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  return _vm.changePage(
+                                    _vm.pagination.current_page + 1
+                                  )
+                                }
+                              }
+                            },
+                            [
+                              _c("span", { attrs: { "aria-hidden": "true" } }, [
+                                _vm._v("»")
+                              ])
+                            ]
+                          )
+                        ])
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ]
+            )
+          ])
         ])
       ]),
       _vm._v(" "),
@@ -57292,6 +57461,17 @@ module.exports = "/images/Logo.svg?d71ac3bf18b21f5c68cc6bc399256029";
 
 /***/ }),
 
+/***/ "./resources/images/correct.svg":
+/*!**************************************!*\
+  !*** ./resources/images/correct.svg ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "/images/correct.svg?0d4e03c5d048be0276faddf7ad489009";
+
+/***/ }),
+
 /***/ "./resources/images/logout.svg":
 /*!*************************************!*\
   !*** ./resources/images/logout.svg ***!
@@ -57880,9 +58060,11 @@ var actions = {
         dispatch = _ref.dispatch;
     setDefaultAuthHeaders(state);
   },
-  fetchStudents: function fetchStudents(_ref2) {
+  fetchStudents: function fetchStudents(_ref2, params) {
     var commit = _ref2.commit;
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(baseURL, "students")).then(function (response) {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(baseURL, "students"), {
+      params: params
+    }).then(function (response) {
       commit("FETCH_STUDENTS", response.data.data);
       return response.data;
     })["catch"](function (error) {
