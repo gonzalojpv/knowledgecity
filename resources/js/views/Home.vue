@@ -111,6 +111,7 @@
         created() {
             this.fetchStudents({}).then( (response) => {
                 console.log(response);
+                this.pagesNumber = response.extra.total;
             });
         },
         computed: {

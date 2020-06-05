@@ -2221,8 +2221,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
+    var _this = this;
+
     this.fetchStudents({}).then(function (response) {
       console.log(response);
+      _this.pagesNumber = response.extra.total;
     });
   },
   computed: _objectSpread({}, _store_helpers__WEBPACK_IMPORTED_MODULE_2__["studentComputed"]),

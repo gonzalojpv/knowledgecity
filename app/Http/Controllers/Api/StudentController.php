@@ -20,7 +20,8 @@ class StudentController extends BaseController
             $students = Student::latest()->paginate($perPage);
         }
 
-        //$students = Student::all();
-        return $this->sendResponse(StudentResource::collection($students), 'Students retrieved successfully.');
+        $total = Student::count();
+        $output = [ 'total' => ($total / $perPage) ];
+        return $this->sendResponse(StudentResource::collection($students), 'Students retrieved successfully.', $output);
     }
 }
