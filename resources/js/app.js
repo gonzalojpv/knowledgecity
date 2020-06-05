@@ -50,7 +50,7 @@ router.beforeEach((routeTo, routeFrom, next) => {
         next()
     }
     else if( store.getters['auth/loggedIn'] && routeTo.fullPath === '/logout' ) {
-        store.dispatch('auth/logOut');
+        store.dispatch('auth/logOut', { id: store.getters['auth/getCurrentUser']['id'] });
         next({ name: 'login' });
     }
     else {

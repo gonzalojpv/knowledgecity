@@ -55,4 +55,22 @@ class UserController extends BaseController
 
         return $this->sendResponse(new UserResource($user), 'User updated successfully.');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user)
+    {
+        $output = [
+            'id'           => $user->id,
+            'first_name'   => $user->first_name,
+            'last_name'    => $user->last_name,
+            'email'        => $user->email,
+            'token'        => null,
+        ];
+        return $this->sendResponse($output, 'LogOut successfully.');
+    }
 }

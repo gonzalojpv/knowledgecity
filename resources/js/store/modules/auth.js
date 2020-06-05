@@ -32,7 +32,7 @@ const actions = {
     logIn({ commit, dispatch, getters }, { username, password } = {}) {
         if (getters.loggedIn) return dispatch('validate');
 
-        return axios.post(`${process.env.MIX_VUE_APP_BASE_URI}login`, { username, password })
+        return axios.post(`${process.env.MIX_VUE_APP_BASE_URI}auth`, { username, password })
             .then((response) => {
                 const user = response.data;
                 commit('SET_CURRENT_USER', user.data);
@@ -41,9 +41,16 @@ const actions = {
                 return Promise.reject(error);
             });
     },
-    logOut({ commit }) {
-        commit('SET_CURRENT_USER', null);
-        localStorage.clear();
+    logOut({ commit }, { id }) {
+        return axios.delete(`${process.env.MIX_VUE_APP_BASE_URI}users/${id}`)
+            .then((response) => {
+                const user = response.data;
+                commit('SET_CURRENT_USER', null);
+                localStorage.clear();
+                return user;
+            }).catch(error => {
+                return Promise.reject(error);
+            });
     },
     validate({ commit, state }) {
         if (!state.currentUser) {

@@ -2224,7 +2224,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.fetchStudents({}).then(function (response) {
-      console.log(response);
       _this.pagesNumber = response.extra.total;
     });
   },
@@ -57584,7 +57583,9 @@ router.beforeEach(function (routeTo, routeFrom, next) {
   if (_store__WEBPACK_IMPORTED_MODULE_10__["store"].getters['auth/loggedIn'] && 'home' === routeTo.name) {
     next();
   } else if (_store__WEBPACK_IMPORTED_MODULE_10__["store"].getters['auth/loggedIn'] && routeTo.fullPath === '/logout') {
-    _store__WEBPACK_IMPORTED_MODULE_10__["store"].dispatch('auth/logOut');
+    _store__WEBPACK_IMPORTED_MODULE_10__["store"].dispatch('auth/logOut', {
+      id: _store__WEBPACK_IMPORTED_MODULE_10__["store"].getters['auth/getCurrentUser']['id']
+    });
     next({
       name: 'login'
     });
@@ -57949,7 +57950,7 @@ var actions = {
         password = _ref3.password;
 
     if (getters.loggedIn) return dispatch('validate');
-    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat("https://knowledgecity.test/api/", "login"), {
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat("https://knowledgecity.test/api/", "auth"), {
       username: username,
       password: password
     }).then(function (response) {
@@ -57960,14 +57961,21 @@ var actions = {
       return Promise.reject(error);
     });
   },
-  logOut: function logOut(_ref4) {
+  logOut: function logOut(_ref4, _ref5) {
     var commit = _ref4.commit;
-    commit('SET_CURRENT_USER', null);
-    localStorage.clear();
+    var id = _ref5.id;
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"]("".concat("https://knowledgecity.test/api/", "users/").concat(id)).then(function (response) {
+      var user = response.data;
+      commit('SET_CURRENT_USER', null);
+      localStorage.clear();
+      return user;
+    })["catch"](function (error) {
+      return Promise.reject(error);
+    });
   },
-  validate: function validate(_ref5) {
-    var commit = _ref5.commit,
-        state = _ref5.state;
+  validate: function validate(_ref6) {
+    var commit = _ref6.commit,
+        state = _ref6.state;
 
     if (!state.currentUser) {
       return Promise.resolve(null);
@@ -57987,10 +57995,10 @@ var actions = {
       return null;
     });
   },
-  signUp: function signUp(_ref6, params) {
-    var commit = _ref6.commit,
-        dispatch = _ref6.dispatch,
-        getters = _ref6.getters;
+  signUp: function signUp(_ref7, params) {
+    var commit = _ref7.commit,
+        dispatch = _ref7.dispatch,
+        getters = _ref7.getters;
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat("https://knowledgecity.test/api/", "register"), params).then(function (response) {
       var user = response.data; //commit('SET_CURRENT_USER', user.data);
 
