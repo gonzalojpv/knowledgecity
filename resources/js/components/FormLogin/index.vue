@@ -41,7 +41,10 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <label class="checkbox-inline">
-                            <input type="checkbox" class="styled" checked="checked">
+                            <input
+                                type="checkbox"
+                                v-model="form.remember_token"
+                                class="styled" checked="checked">
                             Remember me
                         </label>
                     </div>
@@ -80,8 +83,9 @@
             authError     : null,
             tryingToLogIn : false,
             form: {
-                username         : null,
-                password      : null,
+                username:       null,
+                password:       null,
+                remember_token: true,
             }
           };
         },
@@ -103,6 +107,7 @@
                     this.logIn({
                         username: this.form.username,
                         password: this.form.password,
+                        remember_token: this.form.remember_token,
                     }).then((response) => {
                         if (response.success) {
                             this.$router.push({ name: 'home'});

@@ -2009,6 +2009,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2019,7 +2022,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       tryingToLogIn: false,
       form: {
         username: null,
-        password: null
+        password: null,
+        remember_token: true
       }
     };
   },
@@ -2037,7 +2041,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         this.submit = 'Authenticating...';
         this.logIn({
           username: this.form.username,
-          password: this.form.password
+          password: this.form.password,
+          remember_token: this.form.remember_token
         }).then(function (response) {
           if (response.success) {
             _this.$router.push({
@@ -38856,7 +38861,64 @@ var render = function() {
             : _vm._e()
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "form-group login-options" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-6" }, [
+              _c("label", { staticClass: "checkbox-inline" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.form.remember_token,
+                      expression: "form.remember_token"
+                    }
+                  ],
+                  staticClass: "styled",
+                  attrs: { type: "checkbox", checked: "checked" },
+                  domProps: {
+                    checked: Array.isArray(_vm.form.remember_token)
+                      ? _vm._i(_vm.form.remember_token, null) > -1
+                      : _vm.form.remember_token
+                  },
+                  on: {
+                    change: function($event) {
+                      var $$a = _vm.form.remember_token,
+                        $$el = $event.target,
+                        $$c = $$el.checked ? true : false
+                      if (Array.isArray($$a)) {
+                        var $$v = null,
+                          $$i = _vm._i($$a, $$v)
+                        if ($$el.checked) {
+                          $$i < 0 &&
+                            _vm.$set(
+                              _vm.form,
+                              "remember_token",
+                              $$a.concat([$$v])
+                            )
+                        } else {
+                          $$i > -1 &&
+                            _vm.$set(
+                              _vm.form,
+                              "remember_token",
+                              $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                            )
+                        }
+                      } else {
+                        _vm.$set(_vm.form, "remember_token", $$c)
+                      }
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        Remember me\n                    "
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-6 text-right" })
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "form-group" }, [
           _c(
@@ -38877,30 +38939,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group login-options" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-6" }, [
-          _c("label", { staticClass: "checkbox-inline" }, [
-            _c("input", {
-              staticClass: "styled",
-              attrs: { type: "checkbox", checked: "checked" }
-            }),
-            _vm._v(
-              "\n                        Remember me\n                    "
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-6 text-right" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

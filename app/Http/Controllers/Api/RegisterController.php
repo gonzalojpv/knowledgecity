@@ -24,9 +24,11 @@ class RegisterController extends BaseController
      */
     public function login(Request $request)
     {
+        $remember_token = ($request->has('remember_token')) ? true : false;
+
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
-        if(Auth::attempt([ $fieldType => $request->username, 'password' => $request->password])){
+        if(Auth::attempt([ $fieldType => $request->username, 'password' => $request->password], $remember_token)){
             $user = Auth::user();
 
             return $this->sendResponse(new UserResource($user), 'User login successfully.');
