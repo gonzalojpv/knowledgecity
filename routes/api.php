@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('auth', 'Api\RegisterController@login');
+Route::delete('auth', 'Api\UserController@destroy');
+
+Route::group(['middleware' => 'auth:api'], function() {
+    Route::resource('users', 'Api\UserController');
+    Route::resource('students', 'Api\StudentController');
+
+});
+
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });

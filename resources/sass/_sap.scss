@@ -24,7 +24,7 @@ body {
 
     @include media-breakpoint-up(md) {
         /* Margin bottom by footer height */
-        margin-bottom: 20rem;
+        margin-bottom: 3rem;
     }
 
     main {
@@ -40,7 +40,7 @@ footer {
         position: absolute;
         bottom: 0;
         width: 100%;
-        height: 20rem;
+        height: 3rem;
     }
 }
 
